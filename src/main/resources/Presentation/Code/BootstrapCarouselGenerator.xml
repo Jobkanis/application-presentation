@@ -57,13 +57,19 @@ Utils.getComponent(TransformationManager.class).performTransformations(xdom, txC
 def rootSection = xdom.getFirstBlock(new ClassBlockMatcher(SectionBlock.class), Block.Axes.DESCENDANT);
 def sections = rootSection.getChildren();
 def counter = 0
+
+// TODO: pass the counter as url parameter to currentslide
+def currentslide = 1
 // In order to prepare a migration to Bootstrap 4 both classes 'item' and 'carousel-item' are added to the generated divs
 sections.each() { section -&gt;
   if (section.getChildren().size() &gt; 0) {
     counter++
     print '{{html clean="false"}}&lt;div class="item carousel-item'
+    if (counter == currentslide) {
+    	print ' active'
+    }
     if (counter == 1) {
-        print ' header active'
+        print ' header'
     }
     print '"'
     if (section.headerBlock != null) {
